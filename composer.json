@@ -4,10 +4,7 @@
     "sort-packages": true
   },
   "version": "1.0.0",
-  "license": [
-    "MIT",
-    "https://opensource.org/licenses/MIT"
-  ],
+  "license": "MIT",
   "minimum-stability": "stable",
   "require": {
     "php": ">=8.1",
