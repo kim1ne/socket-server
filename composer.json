@@ -3,7 +3,6 @@
   "config": {
     "sort-packages": true
   },
-  "version": "1.0.0",
   "license": "MIT",
   "minimum-stability": "stable",
   "require": {
