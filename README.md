@@ -6,7 +6,7 @@ This package can be installed as a [Composer](https://getcomposer.org/) dependen
 composer require kim1ne/socket-server
 ```
 
-The library uses libraries of the ReactPHP for async. Stream doesn't lock
+The library uses libraries of the ReactPHP for async. Stream locks
 
 ### Supported protocols
 - WS - see [RFC6455](https://datatracker.ietf.org/doc/html/rfc6455)
