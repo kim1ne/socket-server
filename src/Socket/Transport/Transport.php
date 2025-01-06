@@ -10,6 +10,11 @@ use React\EventLoop\LoopInterface;
 
 abstract class Transport implements TransportInterface
 {
+    public function __construct(
+        public readonly string $host,
+        public readonly int $port
+    ) {}
+
     protected ?Context $context = null;
 
     public function connection($socket): Connection
@@ -17,9 +22,9 @@ abstract class Transport implements TransportInterface
         return new Connection($socket, $this);
     }
 
-    public function createServer(string $host, int $port)
+    public function createServer()
     {
-        $server = stream_socket_server($this->getListenAddress($host, $port), $errno, $error);
+        $server = stream_socket_server($this->getListenAddress(), $errno, $error);
 
         if ($server === false) {
             throw new \Exception("Error: $error ($errno)\n");
@@ -28,9 +33,9 @@ abstract class Transport implements TransportInterface
         return $server;
     }
 
-    public function getListenAddress(string $host, int $port): string
+    public function getListenAddress(): string
     {
-        return $this->getProtocol(). "://$host:$port";
+        return $this->getProtocol(). "://$this->host:$this->port";
     }
 
     public function readServer(Server $server)

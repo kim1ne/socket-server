@@ -47,7 +47,7 @@ class Server implements Looper
 
         self::$serverIsCreate = true;
 
-        $this->transport = $transport->get();
+        $this->transport = $transport->get($this->host, $this->port);
 
         $this->createContext($serverContext);
 

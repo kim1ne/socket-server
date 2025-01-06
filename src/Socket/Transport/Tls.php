@@ -14,7 +14,7 @@ class Tls extends Transport
         return true;
     }
 
-    public function createServer(string $host, int $port)
+    public function createServer()
     {
         $context = $this->context->server;
 
@@ -24,7 +24,8 @@ class Tls extends Transport
 
         unset($this->context->server);
 
-        $server = stream_socket_server($this->getListenAddress($host, $port),
+        $server = stream_socket_server(
+            $this->getListenAddress(),
             $errno,
             $error,
             STREAM_SERVER_BIND | STREAM_SERVER_LISTEN,

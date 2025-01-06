@@ -9,8 +9,8 @@ class Wss extends Websocket
         return 'tls';
     }
 
-    public function createServer(string $host, int $port)
+    public function createServer()
     {
-        return (new Tls())->setContext($this->context)->createServer($host, $port);
+        return (new Tls($this->host, $this->port))->setContext($this->context)->createServer();
     }
 }

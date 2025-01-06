@@ -17,8 +17,8 @@ enum Transport: string
     case UDP = UDP::class;
     case TLS = TLS::class;
 
-    public function get(): TransportInterface
+    public function get(string $host, int $port): TransportInterface
     {
-        return new $this->value();
+        return new $this->value($host, $port);
     }
 }

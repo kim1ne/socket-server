@@ -10,6 +10,8 @@ use React\EventLoop\LoopInterface;
 
 interface TransportInterface
 {
+    public function __construct(string $host, int $port);
+    public function getListenAddress(): string;
     public function setContext(Context $context);
     public function getContext(): Context;
     public function getProtocol(): string;
@@ -33,7 +35,7 @@ interface TransportInterface
      * @param int $port
      * @return resource
      */
-    public function createServer(string $host, int $port);
+    public function createServer();
 
     public function readServer(Server $server);
 

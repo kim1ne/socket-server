@@ -38,10 +38,10 @@ class Udp extends Transport
         stream_socket_sendto($this->server, $message, 0, $this->context->getClientAddress());
     }
 
-    public function createServer(string $host, int $port)
+    public function createServer()
     {
         $server = stream_socket_server(
-            $this->getListenAddress(...func_get_args()),
+            $this->getListenAddress(),
             $error,
             $errstr,
             STREAM_SERVER_BIND
