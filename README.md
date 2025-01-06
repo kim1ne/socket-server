@@ -3,7 +3,7 @@
 This package can be installed as a [Composer](https://getcomposer.org/) dependency.
 
 ```bash
-composer require kim1ne/kafka
+composer require kim1ne/socket-server
 ```
 
 The library uses libraries of the ReactPHP for async. Stream doesn't lock
