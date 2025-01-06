@@ -33,15 +33,10 @@ $server->on('connection', function (Connection $connection, Server $server) {
 
 $server->on('message', function (Message $message, Connection $connection, Server $server) {
     InputMessage::green("I've got the message!");
-    $server->sendAllButNotToHim($connection, new Message([
-        'message' => '1 user connected' 
-    ]));
 });
 
 $server->on('close', function (Server $server) {
-    $server->sendAll(new Message([
-        'message' => '1 user disconnected'
-    ]));
+    InputMessage::green('Disconnected')
 });
 
 $server->on('error', function (\Throwable $throwable) {
