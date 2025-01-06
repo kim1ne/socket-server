@@ -1,6 +1,6 @@
 <?php
 
-namespace Kim1ne\Socket\Transport;
+namespace Kim1ne\Socket\Server\Transport;
 
 class Tls extends Transport
 {

@@ -1,13 +1,13 @@
 <?php
 
-namespace Kim1ne\Socket;
+namespace Kim1ne\Socket\Server;
 
-use Kim1ne\Socket\Transport\Tcp;
-use Kim1ne\Socket\Transport\Tls;
-use Kim1ne\Socket\Transport\TransportInterface;
-use Kim1ne\Socket\Transport\Udp;
-use Kim1ne\Socket\Transport\Websocket;
-use Kim1ne\Socket\Transport\Wss;
+use Kim1ne\Socket\Server\Transport\Tcp;
+use Kim1ne\Socket\Server\Transport\Tls;
+use Kim1ne\Socket\Server\Transport\TransportInterface;
+use Kim1ne\Socket\Server\Transport\Udp;
+use Kim1ne\Socket\Server\Transport\Websocket;
+use Kim1ne\Socket\Server\Transport\Wss;
 
 enum Transport: string
 {

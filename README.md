@@ -16,13 +16,14 @@ The library uses libraries of the ReactPHP for async. Stream doesn't lock
 - TLS
 
 #### Create server
+
 ```php
-use Kim1ne\Loop\LoopServer;
-use Kim1ne\Socket\Connection;
-use Kim1ne\Socket\Message;
-use Kim1ne\Socket\Server;
-use Kim1ne\Socket\Transport;
 use Kim1ne\InputMessage;
+use Kim1ne\Loop\LoopServer;
+use Kim1ne\Socket\Server\Connection;
+use Kim1ne\Socket\Server\Message;
+use Kim1ne\Socket\Server\Server;
+use Kim1ne\Socket\Server\Transport;
 
 $server = new Server(transport: Transport::WS, port: 2346);
 

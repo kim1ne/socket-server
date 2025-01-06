@@ -1,8 +1,8 @@
 <?php
 
-namespace Kim1ne\Socket;
+namespace Kim1ne\Socket\Server;
 
-use Kim1ne\Socket\Transport\TransportInterface;
+use Kim1ne\Socket\Server\Transport\TransportInterface;
 
 class Connection
 {

@@ -1,12 +1,11 @@
 <?php
 
-namespace Kim1ne\Socket;
+namespace Kim1ne\Socket\Server;
 
 use Kim1ne\InputMessage;
 use Kim1ne\Loop\LoopServer;
 use Kim1ne\Looper;
-use Kim1ne\Socket\Transport\TransportInterface;
-use Kim1ne\Socket\Transport\Udp;
+use Kim1ne\Socket\Server\Transport\TransportInterface;
 use React\EventLoop\Loop;
 use React\EventLoop\LoopInterface;
 
