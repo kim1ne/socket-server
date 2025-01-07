@@ -1,6 +1,6 @@
 <?php
 
-namespace Kim1ne\Socket\Server;
+namespace Kim1ne\Socket;
 
 class Message
 {

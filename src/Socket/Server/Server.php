@@ -5,6 +5,7 @@ namespace Kim1ne\Socket\Server;
 use Kim1ne\InputMessage;
 use Kim1ne\Loop\LoopServer;
 use Kim1ne\Looper;
+use Kim1ne\Socket\Message;
 use Kim1ne\Socket\Server\Transport\TransportInterface;
 use React\EventLoop\Loop;
 use React\EventLoop\LoopInterface;

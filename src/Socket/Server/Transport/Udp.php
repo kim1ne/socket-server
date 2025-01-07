@@ -3,7 +3,7 @@
 namespace Kim1ne\Socket\Server\Transport;
 
 use Kim1ne\Socket\Server\Connection;
-use Kim1ne\Socket\Server\Message;
+use Kim1ne\Socket\Message;
 use Kim1ne\Socket\Server\Server;
 
 #[\AllowDynamicProperties]

@@ -2,6 +2,7 @@
 
 namespace Kim1ne\Socket\Server;
 
+use Kim1ne\Socket\Message;
 use Kim1ne\Socket\Server\Transport\TransportInterface;
 
 class Connection
