@@ -16,8 +16,8 @@ The library uses libraries of the ReactPHP for async. Stream locks
 - TLS
 
 ### Usage
-- [Create server](?tab=readme-ov-file#create-server)
-- [Example: create server TLS/WSS](?tab=readme-ov-file#example-create-server-tlswss)
+- [Create server](https://github.com/kim1ne/socket-server/tree/main?tab=readme-ov-file#create-server-and-run)
+- [Example: create server TLS/WSS](https://github.com/kim1ne/socket-server/tree/main?tab=readme-ov-file#example-create-server-tlswss)
 
 
 #### Create server and run
