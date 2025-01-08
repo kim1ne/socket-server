@@ -15,7 +15,12 @@ The library uses libraries of the ReactPHP for async. Stream locks
 - UDP
 - TLS
 
-#### Create server
+### Usage
+- [Create server](?tab=readme-ov-file#create-server)
+- [Example: create server TLS/WSS](?tab=readme-ov-file#example-create-server-tlswss)
+
+
+#### Create server and run
 
 ```php
 use Kim1ne\InputMessage;
@@ -44,4 +49,20 @@ $server->on('error', function (\Throwable $throwable) {
 });
 
 LoopServer::run($server);
+```
+
+#### Example: create server TLS/WSS
+```php
+use Kim1ne\Socket\Server\Server;
+use Kim1ne\Socket\Server\Transport;
+
+$server = new Server(transport: Transport::TLS, port: 2346, serverContext: [
+        "ssl" => [
+        "local_cert" => "./certs/server.crt",
+        "local_pk" => "./certs/server.key",
+        "verify_peer" => false,
+        "crypto_method" => STREAM_CRYPTO_METHOD_TLSv1_2_SERVER | STREAM_CRYPTO_METHOD_TLSv1_3_SERVER,
+        "disable_compression" => true,
+    ]
+]);
 ```
