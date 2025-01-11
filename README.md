@@ -24,7 +24,6 @@ The library uses libraries of the ReactPHP for async. Stream locks
 
 ```php
 use Kim1ne\InputMessage;
-use Kim1ne\Loop\LoopServer;
 use Kim1ne\Socket\Server\Connection;
 use Kim1ne\Socket\Server\Message;
 use Kim1ne\Socket\Server\Server;
