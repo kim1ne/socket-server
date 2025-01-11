@@ -48,7 +48,7 @@ $server->on('error', function (\Throwable $throwable) {
     InputMessage::red('Error: ' . $throwable->getMessage());
 });
 
-LoopServer::run($server);
+$server->run();
 ```
 
 #### Example: create server TLS/WSS
