@@ -25,7 +25,7 @@ The library uses libraries of the ReactPHP for async. Stream locks
 ```php
 use Kim1ne\InputMessage;
 use Kim1ne\Socket\Server\Connection;
-use Kim1ne\Socket\Server\Message;
+use Kim1ne\Socket\Message;
 use Kim1ne\Socket\Server\Server;
 use Kim1ne\Socket\Server\Transport;
 
@@ -65,3 +65,40 @@ $server = new Server(transport: Transport::TLS, port: 2346, serverContext: [
     ]
 ]);
 ```
+
+#### Send message to all connected
+```php
+/**
+ * @var \Kim1ne\Socket\Server\Server $server 
+ */
+$server->sendAll('{message: "The message to all"}');
+```
+
+#### Send message to selected
+```php
+use Kim1ne\Socket\Server\Connection;
+
+$server->sendChoice('{message: "The message to selected"}', function (Connection $connection) {
+    return (int) $connection->get('user_id') === 1;
+});
+```
+#### Set property for connection
+the object [\Kim1ne\Socket\Server\Connection](https://github.com/kim1ne/socket-server/blob/main/src/Socket/Server/Connection.php) supports dynamic properties
+```php
+use Kim1ne\Socket\Server\Connection;
+use Kim1ne\Socket\Message;
+use Kim1ne\Socket\Server\Server;
+
+/**
+ * @var \Kim1ne\Socket\Server\Server $server 
+ */
+$server->on('message', function (Message $message, Connection $connection, Server $server) {
+    $message = $message->getDecodeJson();
+    
+    if ($message['type'] === 'auth') {
+        $userId = $message['user_id'];
+        $connection->set('user_id', $userId);
+    }
+})
+```
+
