@@ -18,6 +18,9 @@ The library uses libraries of the ReactPHP for async. Stream locks
 ### Usage
 - [Create server](https://github.com/kim1ne/socket-server/tree/main?tab=readme-ov-file#create-server-and-run)
 - [Example: create server TLS/WSS](https://github.com/kim1ne/socket-server/tree/main?tab=readme-ov-file#example-create-server-tlswss)
+- [Send message to all connected](https://github.com/kim1ne/socket-server/tree/main?tab=readme-ov-file#send-message-to-all-connected)
+- [Send message to selected](https://github.com/kim1ne/socket-server/tree/main?tab=readme-ov-file#send-message-to-selected)
+- [Set property for connection](https://github.com/kim1ne/socket-server/tree/main?tab=readme-ov-file#set-property-for-connection)
 
 
 #### Create server and run
