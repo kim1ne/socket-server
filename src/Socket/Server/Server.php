@@ -14,6 +14,8 @@ class Server implements Looper
 {
     public static bool $serverIsCreate = false;
 
+    private bool $isRun = false;
+
     /**
      * @var resource $server
      */
@@ -129,7 +131,9 @@ class Server implements Looper
      */
     public function run(): void
     {
-        InputMessage::green('Listen to ' . $this->transport->getListenAddress($this->host, $this->port));
+        $this->isRun = true;
+
+        InputMessage::green('Listen to ' . $this->transport->getListenAddress());
 
         $loop = $this->getLoop();
 
@@ -143,7 +147,10 @@ class Server implements Looper
             $this->handleClientConnection($clientSocket, $loop);
         });
 
-        if (LoopServer::isStart() === false) {
+        if (
+            !class_exists(LoopServer::class) ||
+            LoopServer::isStart() === false
+        ) {
             $loop->run();
             $this->close($this->server);
         }
@@ -294,5 +301,24 @@ class Server implements Looper
         $this->sendAllWrap($message, function ($key, Connection $connection) use ($callback) {
             return $callback($connection);
         });
+    }
+
+    public function stop(): void
+    {
+        if ($this->isRun === false) {
+            return;
+        }
+
+        $this->isRun = false;
+
+        if (
+            !class_exists(LoopServer::class) ||
+            LoopServer::isStart() === false
+        ) {
+            $this->getLoop()->stop();
+            return;
+        }
+
+        $this->getLoop()->removeReadStream($this->server);
     }
 }
