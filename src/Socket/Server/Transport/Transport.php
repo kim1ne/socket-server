@@ -79,7 +79,7 @@ abstract class Transport implements TransportInterface
         return $this->getContext()->messageEncode  ?? true;
     }
 
-    public function send(Connection $connection, Message $message): void
+    public function send(Connection $connection, Message|string $message): void
     {
         if ($this->isEncode()) {
             $message = $this->encode($message);
