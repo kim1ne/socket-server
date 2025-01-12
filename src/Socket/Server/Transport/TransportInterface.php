@@ -30,11 +30,6 @@ interface TransportInterface
      */
     public function prepare($socket, LoopInterface $loop, callable $onComplete): void;
 
-    /**
-     * @param string $host
-     * @param int $port
-     * @return resource
-     */
     public function createServer();
 
     public function readServer(Server $server);
