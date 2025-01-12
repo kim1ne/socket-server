@@ -40,7 +40,7 @@ class Server implements Looper
         Transport     $transport = Transport::WS,
         public string $host = '0.0.0.0',
         public int    $port = 2346,
-        array $serverContext = []
+        array         $serverContext = []
     )
     {
         if (self::$serverIsCreate) {
@@ -311,14 +311,18 @@ class Server implements Looper
 
         $this->isRun = false;
 
-        if (
-            !class_exists(LoopServer::class) ||
-            LoopServer::isStart() === false
-        ) {
-            $this->getLoop()->stop();
-            return;
+        if (is_resource($this->server)) {
+            $this->getLoop()->removeReadStream($this->server);
+            fclose($this->server);
         }
 
-        $this->getLoop()->removeReadStream($this->server);
+        if (
+            !class_exists(\Kim1ne\Loop\Server::class) ||
+            \Kim1ne\Loop\Server::isStart() === false
+        ) {
+            $this->getLoop()->stop();
+        } else {
+            \Kim1ne\Loop\Server::destroy($this);
+        }
     }
 }
