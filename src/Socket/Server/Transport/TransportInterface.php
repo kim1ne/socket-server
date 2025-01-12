@@ -20,7 +20,7 @@ interface TransportInterface
 
     public function encode(string $buffer): string;
 
-    public function send(Connection $connection, Message $message): void;
+    public function send(Connection $connection, Message|string $message): void;
 
     /**
      * @param resource $socket
