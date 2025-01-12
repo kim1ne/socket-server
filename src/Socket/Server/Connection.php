@@ -51,7 +51,7 @@ class Connection
         return $this->properties[$name] ?? null;
     }
 
-    public function send(string|Message $message): void
+    public function send(Message $message): void
     {
         $this->transport->send($this, $message);
     }
