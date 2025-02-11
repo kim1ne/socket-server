@@ -2,19 +2,18 @@
 
 namespace Kim1ne\Socket\Server;
 
-use Kim1ne\InputMessage;
-use Kim1ne\Loop\LoopServer;
-use Kim1ne\Looper;
+use Kim1ne\Core\EventLoopTrait;
+use Kim1ne\Core\InputMessage;
+use Kim1ne\Core\LooperInterface;
 use Kim1ne\Socket\Message;
 use Kim1ne\Socket\Server\Transport\TransportInterface;
-use React\EventLoop\Loop;
 use React\EventLoop\LoopInterface;
 
-class Server implements Looper
+class Server implements LooperInterface
 {
-    public static bool $serverIsCreate = false;
+    use EventLoopTrait;
 
-    private bool $isRun = false;
+    public static bool $serverIsCreate = false;
 
     /**
      * @var resource $server
@@ -27,10 +26,6 @@ class Server implements Looper
      * @var Connection[]
      */
     private array $connections = [];
-
-    private array $events = [];
-
-    private ?LoopInterface $loop = null;
 
     private readonly Context $context;
 
@@ -83,58 +78,12 @@ class Server implements Looper
         stream_set_blocking($server, false);
     }
 
-    public function setLoop(LoopInterface $loop): static
-    {
-        $this->loop = $loop;
-        return $this;
-    }
-
-    public function getLoop(): LoopInterface
-    {
-        if ($this->loop === null) {
-            $this->loop = Loop::get();
-        }
-        return $this->loop;
-    }
-
-    public function on(string $event, callable $callback): static
-    {
-        $this->events[$event] = $callback;
-
-        return $this;
-    }
-
-    private function callEvent(string $eventType, array $params): void
-    {
-        $callback = $this->events[$eventType] ?? null;
-
-        if (is_callable($callback) === false) {
-            return;
-        }
-
-        try {
-            call_user_func_array($callback, $params);
-        } catch (\Throwable $throwable) {
-            InputMessage::red('Error: ' . $throwable->getMessage());
-
-            try {
-                $this->callEvent('error', [$throwable]);
-            } catch (\Throwable $throwable) {
-
-            }
-        }
-    }
-
     /**
      * @return void
      * @throws \Exception
      */
     public function run(): void
     {
-        $this->isRun = true;
-
-        InputMessage::green('Listen to ' . $this->transport->getListenAddress());
-
         $loop = $this->getLoop();
 
         $loop->addReadStream($this->server, function ($server) use ($loop) {
@@ -147,13 +96,9 @@ class Server implements Looper
             $this->handleClientConnection($clientSocket, $loop);
         });
 
-        if (
-            !class_exists(LoopServer::class) ||
-            LoopServer::isStart() === false
-        ) {
-            $loop->run();
-            $this->close($this->server);
-        }
+        InputMessage::green('Listen to ' . $this->transport->getListenAddress());
+
+        $this->runLoop();
     }
 
     private function handleClientConnection($clientSocket, LoopInterface $loop): void
@@ -228,7 +173,7 @@ class Server implements Looper
 
         $this->connections[$socketId] = $connection;
 
-        $this->callEvent(__FUNCTION__, [$connection, $this]);
+        $this->call(__FUNCTION__, $connection, $this);
 
         return $connection;
     }
@@ -258,13 +203,13 @@ class Server implements Looper
             $connection->close();
         }
 
-        $this->callEvent(__FUNCTION__, [$this]);
+        $this->call(__FUNCTION__, $this);
     }
 
     private function message(Connection $connection, string $message): void
     {
         $message = $this->transport->decode($message);
-        $this->callEvent(__FUNCTION__, [new Message($message), $connection, $this]);
+        $this->call(__FUNCTION__, new Message($message), $connection, $this);
     }
 
     public function sendAll(string|Message $message): void
@@ -305,7 +250,7 @@ class Server implements Looper
 
     public function stop(): void
     {
-        if ($this->isRun === false) {
+        if ($this->isRun() === false) {
             return;
         }
 
@@ -316,13 +261,11 @@ class Server implements Looper
             fclose($this->server);
         }
 
-        if (
-            !class_exists(\Kim1ne\Loop\Server::class) ||
-            \Kim1ne\Loop\Server::isStart() === false
-        ) {
-            $this->getLoop()->stop();
-        } else {
-            \Kim1ne\Loop\Server::destroy($this);
-        }
+        $this->stopLoop();
+    }
+
+    public function getScopeName(): string
+    {
+        return 'socket:server';
     }
 }
